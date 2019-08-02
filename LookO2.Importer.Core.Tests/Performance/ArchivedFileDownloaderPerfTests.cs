@@ -1,7 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using LookO2.Importer.Core.Tests.Fixtures;
-using LookO2.Importer.Core.Tests.Responses;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace LookO2.Importer.Core.Tests.Performance
 {
+    [Ignore("Don't run perf tests on each test run")]
     public class ArchivedFileDownloaderPerfTests
     {
         [MemoryDiagnoser]
