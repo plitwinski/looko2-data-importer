@@ -1,0 +1,45 @@
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using LookO2.Importer.Core.Tests.Fixtures;
+using LookO2.Importer.Core.Tests.Responses;
+using Microsoft.Extensions.Logging;
+using Moq;
+using NUnit.Framework;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace LookO2.Importer.Core.Tests.Performance
+{
+    public class ArchivedFileDownloaderPerfTests
+    {
+        [MemoryDiagnoser]
+        public class ArchivedFileDownloaderWrapper
+        {
+            private const string filePath = "unit-test/test-file.csv";
+
+            private readonly ArchivedFileDownloader target;
+
+            public ArchivedFileDownloaderWrapper()
+            {
+                var handler = new HttpMessageHandlerFixture()
+                    .SetupGetCsv(filePath, CsvFile.TwoLinesCsvV2)
+                    .Create();
+
+                target = new ArchivedFileDownloader(
+                    new HttpClient(handler),
+                    Mock.Of<ILogger<ArchivedFileDownloader>>());
+            }
+
+            [Benchmark]
+            public Task DownloadAsync()
+                => target.DownloadAsync($"http://unit-test.com/{filePath}");
+        }
+
+        [Test]
+        public void WhenDownloadAsync_PerfTest()
+        {
+            var summary = BenchmarkRunner.Run<ArchivedFileDownloaderWrapper>();
+            Assert.Pass($"Results can be found here: {summary.ResultsDirectoryPath}");
+        }
+    }
+}
