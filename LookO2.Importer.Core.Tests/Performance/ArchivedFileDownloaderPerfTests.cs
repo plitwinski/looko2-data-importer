@@ -5,6 +5,8 @@ using LookO2.Importer.Core.Tests.Responses;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -19,10 +21,14 @@ namespace LookO2.Importer.Core.Tests.Performance
 
             private readonly ArchivedFileDownloader target;
 
+            private static Lazy<string> FileContent = new Lazy<string>(() => {
+                return File.ReadAllText(Path.Combine("Performance", "Files", "Archives_2019-01-01.csv"));
+            });
+
             public ArchivedFileDownloaderWrapper()
             {
                 var handler = new HttpMessageHandlerFixture()
-                    .SetupGetCsv(filePath, CsvFile.TwoLinesCsvV2)
+                    .SetupGetCsv(filePath, FileContent.Value)
                     .Create();
 
                 target = new ArchivedFileDownloader(

@@ -15,7 +15,7 @@ namespace LookO2.Importer.Core.Tests.Fixtures
             Mock.Setup(p => p.Send(It.Is<HttpRequestMessage>(
                 x => x.Method == HttpMethod.Get
                   && x.RequestUri.AbsolutePath.EndsWith(path, StringComparison.InvariantCultureIgnoreCase))))
-                  .Returns(new HttpResponseMessage()
+                  .Returns(() => new HttpResponseMessage()
                   {
                       StatusCode = HttpStatusCode.OK,
                       Content = new StringContent(csvContent, Encoding.UTF8, "text/csv")
