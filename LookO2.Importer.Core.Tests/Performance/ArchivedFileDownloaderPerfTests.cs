@@ -21,9 +21,9 @@ namespace LookO2.Importer.Core.Tests.Performance
 
             private readonly ArchivedFileDownloader target;
 
-            private static Lazy<string> FileContent = new Lazy<string>(() => {
-                return File.ReadAllText(Path.Combine("Performance", "Files", "Archives_2019-01-01.csv"));
-            });
+            private static Lazy<string> FileContent = 
+                new Lazy<string>(() 
+                    => File.ReadAllText(Path.Combine("Performance", "Files", "Archives_2019-01-01.csv")));
 
             public ArchivedFileDownloaderWrapper()
             {
