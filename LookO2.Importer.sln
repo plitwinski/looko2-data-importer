@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LookO2.Importer.Core", "Loo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LookO2.Importer.Persistance", "LookO2.Importer.Persistance\LookO2.Importer.Persistance.csproj", "{CCAADB18-2FAE-4E5C-835F-C9195F3CE5D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LookO2.Importer.Core.Tests", "LookO2.Importer.Core.Tests\LookO2.Importer.Core.Tests.csproj", "{50568349-2B35-4CEA-8251-25FC6A20A570}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LookO2.Importer.Core.Tests", "LookO2.Importer.Core.Tests\LookO2.Importer.Core.Tests.csproj", "{50568349-2B35-4CEA-8251-25FC6A20A570}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LookO2.Importer.Extensions", "LookO2.Importer.Extensions\LookO2.Importer.Extensions.csproj", "{FF232967-DE2E-4842-8DEE-8864029764E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{50568349-2B35-4CEA-8251-25FC6A20A570}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50568349-2B35-4CEA-8251-25FC6A20A570}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50568349-2B35-4CEA-8251-25FC6A20A570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF232967-DE2E-4842-8DEE-8864029764E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF232967-DE2E-4842-8DEE-8864029764E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF232967-DE2E-4842-8DEE-8864029764E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF232967-DE2E-4842-8DEE-8864029764E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
