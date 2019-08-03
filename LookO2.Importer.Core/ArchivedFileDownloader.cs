@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LookO2.Importer.Core
@@ -13,6 +12,7 @@ namespace LookO2.Importer.Core
     public class ArchivedFileDownloader : IArchivedFileDownloader
     {
         private readonly HttpClient httpClient;
+
         private readonly ILogger<ArchivedFileDownloader> logger;
 
         public ArchivedFileDownloader(HttpClient httpClient, ILogger<ArchivedFileDownloader> logger)
@@ -43,18 +43,8 @@ namespace LookO2.Importer.Core
         {
             var cells = line.AsSpan().Split(',').GetEnumerator();
 
-            var sb = new StringBuilder();
-            sb.Append(GetCurrentValue(ref cells));
-            sb.Append(' ');
-            sb.Append(GetCurrentValue(ref cells));
-            sb.Append(':');
-            sb.Append(GetCurrentValue(ref cells));
-            sb.Append(':');
-            sb.Append(GetCurrentValue(ref cells));
-            sb.Append("+01:00");
+            var dateTime = GetDateTime(ref cells);
             cells.MoveNext();
-
-            var dateTime = DateTimeOffset.Parse(sb.ToString());
             var deviceId = GetCurrentValue(ref cells);
             var pm1 = double.Parse(GetCurrentValue(ref cells));
             var pm25 = double.Parse(GetCurrentValue(ref cells));
@@ -76,6 +66,20 @@ namespace LookO2.Importer.Core
             var device = new MeterDevice(deviceId, deviceNameOrHcho);
 
             return new MeterReading(dateTime, pm1, pm25, pm10, device, hcho, temperature, humidity);
+        }
+
+        private DateTimeOffset GetDateTime(ref SplitSpanEnumerator<char> cells)
+        {
+            var date = GetCurrentValue(ref cells).Split('-').GetEnumerator();
+
+            var year = int.Parse(GetCurrentValue(ref date));
+            var month = int.Parse(GetCurrentValue(ref date));
+            var day = int.Parse(GetCurrentValue(ref date));
+
+            var hours = int.Parse(GetCurrentValue(ref cells));
+            var minutes = int.Parse(GetCurrentValue(ref cells));
+            var seconds = int.Parse(GetCurrentValue(ref cells));
+            return new DateTimeOffset(year, month, day, hours, minutes, seconds, TimeSpan.FromHours(1));
         }
 
         private ReadOnlySpan<char> GetCurrentValue(ref SplitSpanEnumerator<char> cells)
