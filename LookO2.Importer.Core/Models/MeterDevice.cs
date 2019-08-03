@@ -1,4 +1,6 @@
-﻿namespace LookO2.Importer.Core.Models
+﻿using System;
+
+namespace LookO2.Importer.Core.Models
 {
     public class MeterDevice
     {
@@ -9,6 +11,12 @@
         {
             Id = id;
             Name = name;
+        }
+
+        public MeterDevice(ReadOnlySpan<char> id, ReadOnlySpan<char> name)
+        {
+            Id = id.ToString();
+            Name = name.ToString();
         }
     }
 }

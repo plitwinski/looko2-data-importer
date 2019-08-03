@@ -1,9 +1,11 @@
-﻿using LookO2.Importer.Core.Models;
+﻿using LookO2.Importer.Core.Extensions;
+using LookO2.Importer.Core.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LookO2.Importer.Core
@@ -30,38 +32,56 @@ namespace LookO2.Importer.Core
                 while(streamReader.Peek() >= 0)
                 {
                     var line = await streamReader.ReadLineAsync();
-                    var cells = line.Split(',');
-                    if (cells.Length < 10)
-                        continue;
-
-                    var isNewVersion = cells.Length > 10;
-                    var nameIndex = 9;
-
-                    var dateTime = DateTimeOffset.Parse($"{cells[0].Trim('"')} {cells[1].Trim('"')}:{cells[2].Trim('"')}:{cells[3].Trim('"')}+01:00");
-                    var pm1 = double.Parse(cells[6].Trim('"'));
-                    var pm25 = double.Parse(cells[7].Trim('"'));
-                    var pm10 = double.Parse(cells[8].Trim('"'));
-
-                    double? hcho = null;
-                    double? temperature = null;
-                    double? humidity = null;
-
-                    if (isNewVersion)
-                    {
-                        nameIndex = 10;
-                        hcho = double.Parse(cells[9].Trim('"'));
-                        temperature = double.Parse(cells[11].Trim('"'));
-                        humidity = double.Parse(cells[12].Trim('"'));
-                    }
-
-                    var device = new MeterDevice(cells[5].Trim('"'), cells[nameIndex].Trim('"'));
-
-                    var reading = new MeterReading(dateTime, pm1, pm25, pm10, device, hcho, temperature, humidity);
-                    result.Add(reading);
+                    result.Add(GetReading(in line));
                 }
             }
             logger.LogInformation($"Parsed into {result.Count} readings");
             return result;
+        }
+
+        private MeterReading GetReading(in string line)
+        {
+            var cells = line.AsSpan().Split(',').GetEnumerator();
+
+            var sb = new StringBuilder();
+            sb.Append(GetCurrentValue(ref cells));
+            sb.Append(' ');
+            sb.Append(GetCurrentValue(ref cells));
+            sb.Append(':');
+            sb.Append(GetCurrentValue(ref cells));
+            sb.Append(':');
+            sb.Append(GetCurrentValue(ref cells));
+            sb.Append("+01:00");
+            cells.MoveNext();
+
+            var dateTime = DateTimeOffset.Parse(sb.ToString());
+            var deviceId = GetCurrentValue(ref cells);
+            var pm1 = double.Parse(GetCurrentValue(ref cells));
+            var pm25 = double.Parse(GetCurrentValue(ref cells));
+            var pm10 = double.Parse(GetCurrentValue(ref cells));
+
+            double? hcho = null;
+            double? temperature = null;
+            double? humidity = null;
+
+            var deviceNameOrHcho = GetCurrentValue(ref cells);
+            if(double.TryParse(deviceNameOrHcho, out var parsedHcho))
+            {
+                hcho = parsedHcho;
+                deviceNameOrHcho = GetCurrentValue(ref cells);
+                temperature = double.Parse(GetCurrentValue(ref cells));
+                humidity = double.Parse(GetCurrentValue(ref cells));
+            }
+
+            var device = new MeterDevice(deviceId, deviceNameOrHcho);
+
+            return new MeterReading(dateTime, pm1, pm25, pm10, device, hcho, temperature, humidity);
+        }
+
+        private ReadOnlySpan<char> GetCurrentValue(ref SplitSpanEnumerator<char> cells)
+        {
+            cells.MoveNext();
+            return cells.Current.Trim('"');
         }
     }
 }
