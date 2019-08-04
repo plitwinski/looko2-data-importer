@@ -12,7 +12,7 @@ namespace LookO2.Importer.Console.IoC
 {
     internal class Dependencies
     {
-        public static IServiceProvider Configure()
+        public static IServiceCollection Configure()
         {
             var configuration = GetConfiguration();
 
@@ -33,7 +33,7 @@ namespace LookO2.Importer.Console.IoC
             services.AddSingleton<IMeterReadingsRepository, MeterReadingsRepository>();
             services.AddSingleton<IArchivedFileDownloader, ArchivedFileDownloader>();
             services.AddSingleton<LookO2Importer>();
-            return services.BuildServiceProvider();
+            return services;
         }
 
         static IConfigurationRoot GetConfiguration()

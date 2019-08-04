@@ -1,6 +1,6 @@
-﻿namespace LookO2.Importer.Core.Tests.Responses
+﻿namespace LookO2.Importer.Tests.Responses
 {
-    internal static class CsvFile
+    public static class CsvFile
     {
         public const string TwoLinesCsvV1 = @"""2018-01-01"",""0"",""1"",""1"",""2018"",""18FE34CAD092"",""24.1167"",""34.2167"",""40.5333"",""LOOKO2_UGiM""
 ""2018-01-01"",""0"",""1"",""1"",""2018"",""18FE34CB2E25"",""18.7667"",""21.2667"",""21.8667"",""ProstaKn""";

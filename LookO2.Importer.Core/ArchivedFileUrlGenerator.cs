@@ -21,7 +21,7 @@ namespace LookO2.Importer.Core
             get
             {
                 if(dateRange.Current.Year < DateTime.Now.Year)
-                    return $"http://looko2.com/Archives/2018/Archives_{dateRange.Current.ToString("yyyy-MM-dd")}.csv";
+                    return $"http://looko2.com/Archives/{dateRange.Current.Year}/Archives_{dateRange.Current.ToString("yyyy-MM-dd")}.csv";
                 return $"http://looko2.com/Archives/Archives_{dateRange.Current.ToString("yyyy-MM-dd")}.csv";
 
             }

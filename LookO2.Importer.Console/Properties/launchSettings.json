@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LookO2.Importer.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "import -s 2019-08-04 -e 2019-08-03"
+    }
+  }
+}

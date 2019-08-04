@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LookO2.Importer.Core.Tests.Fixtures
+namespace LookO2.Importer.Tests.Fixtures
 {
     public class TestMessageHandler : HttpMessageHandler
     {

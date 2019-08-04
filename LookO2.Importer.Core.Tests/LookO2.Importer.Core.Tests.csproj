@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LookO2.Importer.Core\LookO2.Importer.Core.csproj" />
+    <ProjectReference Include="..\LookO2.Importer.Tests.Fixtures\LookO2.Importer.Tests.Fixtures.csproj" />
   </ItemGroup>
 
 </Project>

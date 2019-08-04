@@ -1,6 +1,6 @@
 ﻿using Moq;
 
-namespace LookO2.Importer.Core.Tests.Fixtures
+namespace LookO2.Importer.Tests.Fixtures
 {
     public abstract class BaseFixture<TMock>
         where TMock : class

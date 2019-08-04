@@ -4,9 +4,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
-namespace LookO2.Importer.Core.Tests.Fixtures
+namespace LookO2.Importer.Tests.Fixtures
 {
-    internal class HttpMessageHandlerFixture : BaseFixture<TestMessageHandler>
+    public class HttpMessageHandlerFixture : BaseFixture<TestMessageHandler>
     {
         public HttpMessageHandlerFixture() : base(true) { }
 

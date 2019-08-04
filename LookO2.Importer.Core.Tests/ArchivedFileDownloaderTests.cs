@@ -1,8 +1,8 @@
 using LookO2.Importer.Core;
 using LookO2.Importer.Core.Models;
 using LookO2.Importer.Core.Tests;
-using LookO2.Importer.Core.Tests.Fixtures;
-using LookO2.Importer.Core.Tests.Responses;
+using LookO2.Importer.Tests.Fixtures;
+using LookO2.Importer.Tests.Responses;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
