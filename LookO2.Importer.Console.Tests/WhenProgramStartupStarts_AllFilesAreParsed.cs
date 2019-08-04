@@ -24,20 +24,11 @@ namespace LookO2.Importer.Console.Tests
         {
             startDate = new DateTime(2017, 1, 1);
             endDate = startDate.AddDays(NoOfDaysToParse - 1);
-
-            handlerFixture = new HttpMessageHandlerFixture();
-
-            for(var i = 0; i < NoOfDaysToParse; i++)
-            {
-                var date = startDate.AddDays(i);
-                handlerFixture
-                    .SetupGetCsv($"Archives/{date.Year}/Archives_{date.ToString("yyyy-MM-dd")}.csv", CsvFile.TwoLinesCsvV2);
-            }
-
-            target = new ProgramStartupFixture()
-                .AddMock(new HttpClient(handlerFixture.Create()))
-                .AddMock(() => new ReadingsContextFixture().Create())
-                .Create();
+            var fixture = new ProgramStartupFixture()
+                .SetupCsvResponses(startDate, NoOfDaysToParse, CsvFile.TwoLinesCsvV2)
+                .AddMock(() => new ReadingsContextFixture().Create());
+            handlerFixture = fixture.HandlerFixture;
+           target = fixture.Create();
         }
 
         public override void When()

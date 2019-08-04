@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace LookO2.Importer.Core.Tests.Performance
 {
     [Ignore("Don't run perf tests on each test run")]
+    [TestFixture(Category = TestCategory.Performance)]
     public class ArchivedFileDownloaderPerfTests
     {
         [MemoryDiagnoser]
